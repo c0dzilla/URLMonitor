@@ -1,12 +1,15 @@
 var express = require('express');
 var HomeController = require('./controllers/homeController.js');
 var UrlController = require('./controllers/urlController.js');
-var config = require('config.json')
+var config = require('config.json');
 
 var app = express();
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 app.listen(config.port || 3000);
 
@@ -25,7 +28,7 @@ app.get('/:id', (req, res) => {
 
 app.put('/:id', (req, res) => {
   const id = req.params.id;
-  UrlController.updateUrl(req, res, id);
+  UrlController.editUrl(req, res, id);
 });
 
 app.delete('/:id', (req, res) => {

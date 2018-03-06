@@ -22,7 +22,7 @@ List.addUrl = (urlObj) => {
   });
 }
 
-List.deleteUrl = ((id) => {
+List.deleteUrl = (id) => {
   const query = { _id : id };
   return new Promise((resolve, reject) => {
     instance.collection('list').deleteOne(query, ((err, obj) => {
@@ -31,4 +31,4 @@ List.deleteUrl = ((id) => {
       resolve();
     });
   })
-})
+}
