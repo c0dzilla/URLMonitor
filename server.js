@@ -1,5 +1,6 @@
 var express = require('express');
 var homeController = require('/controllers/homeController.js');
+var config = require('config.json')
 
 var app = express();
 app.set('views', __dirname + '/views');
@@ -18,7 +19,7 @@ app.post('/', (req, res) => {
 
 app.get('/:id', (req, res) => {
   const id = req.params.id;
-  urlController.sendUrlData(req, res, id);
+  urlController.getUrlData(req, res, id);
 });
 
 app.put('/:id', (req, res) => {
