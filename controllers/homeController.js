@@ -26,7 +26,7 @@ homeController.addUrl = (req, res) => {
   }
   List.addUrl(urlObj)
   .then(() => {
-    ServiceController.startService(urlObj);
+    ServiceController.startService(id);
   });
   .catch(err => {
     res.redirect('/');
@@ -53,7 +53,7 @@ homeController.editUrl = (req, res, id) => {
   }
   List.updateUrl(id, urlObj)
     .then(() => {
-      ServiceController.restartService(urlObj);
+      ServiceController.restartService(id);
     });
     .catch(err => {
       res.redirect('/');

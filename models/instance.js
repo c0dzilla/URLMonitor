@@ -1,4 +1,4 @@
-const config = require('config.json');
+const config = require('../config/config.json');
 var MongoClient = require('mongodb').MongoClient;
 
 const dbInstance = () => {
