@@ -1,5 +1,6 @@
 var express = require('express');
-var homeController = require('/controllers/homeController.js');
+var HomeController = require('./controllers/homeController.js');
+var UrlController = require('./controllers/urlController.js');
 var config = require('config.json')
 
 var app = express();
@@ -19,15 +20,15 @@ app.post('/', (req, res) => {
 
 app.get('/:id', (req, res) => {
   const id = req.params.id;
-  urlController.getUrlData(req, res, id);
+  UrlController.getUrlData(req, res, id);
 });
 
 app.put('/:id', (req, res) => {
   const id = req.params.id;
-  urlController.editUrl(req, res, id);
+  UrlController.updateUrl(req, res, id);
 });
 
 app.delete('/:id', (req, res) => {
   const id = req.params.id;
-  urlController.deleteUrl(req, res, id);
+  UrlController.deleteUrl(req, res, id);
 });

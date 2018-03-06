@@ -2,7 +2,7 @@ const instance = require('instance.js');
 
 function List = {};
 
-List.listUrls = () => {
+List.getUrls = () => {
   return new Promise((resolve, reject) => {
     instance.collection('list').find({}).toArray((err, result) => {
       if (err)
