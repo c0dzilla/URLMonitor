@@ -7,8 +7,19 @@ List.getUrls = () => {
     instance.collection('list').find({}).toArray((err, result) => {
       if (err)
         throw err;
+      resolve(result);
     });
-    resolve(result);
+  });
+}
+
+List.getUrl = (id) => {
+  const query = { _id : id };
+  return new Promise((resolve, reject) => {
+    instance.collection('list').findOne(query).toArray((err, result) => {
+      if (err)
+        throw err;
+      resolve(result);
+    });
   });
 }
 
@@ -17,8 +28,8 @@ List.addUrl = (urlObj) => {
     instance.collection('list').insertOne((urlObj), () => {
       if (err)
         throw err;
+      resolve();
     });
-    resolve();
   });
 }
 
