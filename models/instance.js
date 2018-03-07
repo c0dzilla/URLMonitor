@@ -1,18 +1,21 @@
 const config = require('../config/config.json');
 var MongoClient = require('mongodb').MongoClient;
 
-const dbInstance = () => {
-  let instance;
+var instance = null;
 
-  MongoClient.connect(config.url, (err, db) => {
+const dbInstance = async () => {
+  if (instance !== null)
+    return instance;
+    MongoClient.connect(config.mongo.url, (err, db) => {
     if (err)
       throw err;
-    instance = db.db(config.database);
+    console.log("Connected to server!");
+    instance = db;
   });
 
   return instance;
 }
 
-module.exports = 'dbInstance';
+module.exports = dbInstance;
 
 
