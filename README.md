@@ -1,6 +1,6 @@
 # URL MONITOR
 
-UrlMonitor is a url monitoring tool that makes HTTP requests at a URL and stores response times at regular intervals for further analysis.
+UrlMonitor is a tool that makes HTTP requests at a URL and stores response times at regular intervals for further analysis.
 
 ## API Calls
 
@@ -27,3 +27,9 @@ Replaces the URL information at requested id with information from form data pas
 
 ### DELETE /:id
 Stops monitoring service for url with id equal to parameter id and removes all data pertaining to it. 
+
+## Setup
+1. Clone repository.
+2. Navigate to repository `cd <dir_name>`.
+3. Default port is 4321. It can be changed in config.json file.
+4. Run node server `npm start`.
