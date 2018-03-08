@@ -17,7 +17,6 @@ List.getUrl = (id) => {
   const query = { _id : id };
   return new Promise((resolve, reject) => {
     instance.collection('list').findOne(query, (err, result) => {
-      console.log(result);
       if (err)
         reject(err);
       resolve(result);
@@ -31,7 +30,8 @@ List.addUrl = (urlObj) => {
     instance.collection('list').insertOne(urlObj, (err, result) => {
       if (err)
         reject(err);
-      resolve();
+      console.log(result);
+      resolve(result);
     });
   });
 }
@@ -40,10 +40,10 @@ List.deleteUrl = (id) => {
   let instance = db.getInstance();
   const query = { _id : id };
   return new Promise((resolve, reject) => {
-    instance.collection('list').deleteOne(query, (err, obj) => {
+    instance.collection('list').deleteOne(query, (err, result) => {
       if (err)
         reject(err);
-      resolve();
+      resolve(result);
     });
   })
 }

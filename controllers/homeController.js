@@ -7,8 +7,8 @@ function homeController () {};
 
 homeController.listUrls = (req, res) => {
   List.getUrls()
-    .then(result => {
-      res.send(result);
+    .then(urls => {
+      res.send(urls);
     })
     .catch(err => {
       console.log(err);
@@ -18,7 +18,7 @@ homeController.listUrls = (req, res) => {
 homeController.addUrl = (req, res) => {
   console.log(req.body);
   // TODO: Generate truly unique id
-  const id = parseInt(Math.random()*100);
+  const id = parseInt(Math.random()*100).toString();
   const urlObj = {
     _id: id,
     url: req.body.url,
@@ -27,20 +27,22 @@ homeController.addUrl = (req, res) => {
     headers: req.body.headers
   }
   List.addUrl(urlObj)
-  .then(() => {
+  .then(result => {
     ServiceController.startService(id);
-    res.send('added');
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(result));
   })
   .catch(err => {
-    res.redirect('/');
+    console.log(err);
   })
 }
 
 homeController.deleteUrl = (req, res, id) => {
   List.deleteUrl(id)
-    .then(() => {
+    .then(result => {
       ServiceController.endService(id);
-      res.send("deleted");
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(result));
     })
     .catch(err => {
       console.log(err);
@@ -55,19 +57,24 @@ homeController.editUrl = (req, res, id) => {
     method: req.body.method,
     headers: req.body.headers
   }
-  List.updateUrl(id, urlObj)
-    .then(() => {
+  Url.update(id, urlObj)
+    .then(result => {
       ServiceController.endService(id);
       ServiceController.startService(id);
     })
     .catch(err => {
-      res.redirect('/');
+      console.log(err);
     });
 }
 
 homeController.getUrlData = (req, res, id) => {
   List.getUrl(id)
     .then(urlData => {
+      // id was never assigned or monitoring has been stopped
+      if (!urlData) {
+        res.setHeader('Content-Type', 'application/json');
+        return res.send(JSON.stringify({ success: false }));
+      }
       const percentileQueries = [50, 75, 95, 99];
       let percentileResults = [];
       percentileQueries.forEach((query) => {
