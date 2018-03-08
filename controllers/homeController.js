@@ -61,6 +61,8 @@ homeController.editUrl = (req, res, id) => {
     .then(result => {
       ServiceController.endService(id);
       ServiceController.startService(id);
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(result));
     })
     .catch(err => {
       console.log(err);
