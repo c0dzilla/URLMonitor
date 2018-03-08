@@ -1,6 +1,7 @@
 const List = require('../models/list.js');
 const Url = require('../models/url.js');
 const ServiceController = require('./serviceController.js');
+const Percentile = require('../utils/percentile.js');
 
 function homeController () {};
 
@@ -39,9 +40,10 @@ homeController.deleteUrl = (req, res, id) => {
   List.deleteUrl(id)
     .then(() => {
       ServiceController.endService(id);
+      res.send("deleted");
     })
     .catch(err => {
-      res.redirect('/');
+      console.log(err);
     })
 }
 
@@ -60,6 +62,23 @@ homeController.editUrl = (req, res, id) => {
     })
     .catch(err => {
       res.redirect('/');
+    });
+}
+
+homeController.getUrlData = (req, res, id) => {
+  List.getUrl(id)
+    .then(urlData => {
+      const percentileQueries = [50, 75, 95, 99];
+      let percentileResults = [];
+      percentileQueries.forEach((query) => {
+        percentileResults.push(Percentile.calculate(urlData.responses, query));
+      })
+      urlData.percentile = percentileResults;
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(urlData));
+    })
+    .catch(err => {
+      console.log(err);
     });
 }
 

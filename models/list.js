@@ -17,6 +17,7 @@ List.getUrl = (id) => {
   const query = { _id : id };
   return new Promise((resolve, reject) => {
     instance.collection('list').findOne(query, (err, result) => {
+      console.log(result);
       if (err)
         reject(err);
       resolve(result);
