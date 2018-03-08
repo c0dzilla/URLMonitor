@@ -2,6 +2,7 @@ const List = require('../models/list.js');
 const Url = require('../models/url.js');
 const ServiceController = require('./serviceController.js');
 const Percentile = require('../utils/percentile.js');
+const crypto = require('crypto');
 
 function homeController () {};
 
@@ -17,8 +18,7 @@ homeController.listUrls = (req, res) => {
 
 homeController.addUrl = (req, res) => {
   console.log(req.body);
-  // TODO: Generate truly unique id
-  const id = parseInt(Math.random()*100).toString();
+  const id = crypto.randomBytes(16).toString("hex");
   const urlObj = {
     _id: id,
     url: req.body.url,
