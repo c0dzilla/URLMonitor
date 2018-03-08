@@ -36,7 +36,8 @@ homeController.addUrl = (req, res) => {
   })
 }
 
-homeController.deleteUrl = (req, res, id) => {
+homeController.deleteUrl = (req, res) => {
+  const id = req.params.id;
   List.deleteUrl(id)
     .then(result => {
       ServiceController.endService(id);
@@ -48,7 +49,8 @@ homeController.deleteUrl = (req, res, id) => {
     })
 }
 
-homeController.editUrl = (req, res, id) => {
+homeController.editUrl = (req, res) => {
+  const id = req.params.id;
   const urlObj = {
     _id: id,
     url: req.body.url,
@@ -68,7 +70,8 @@ homeController.editUrl = (req, res, id) => {
     });
 }
 
-homeController.getUrlData = (req, res, id) => {
+homeController.getUrlData = (req, res) => {
+  const id = req.params.id;
   List.getUrl(id)
     .then(urlData => {
       // id was never assigned or monitoring has been stopped
