@@ -30,7 +30,6 @@ List.addUrl = (urlObj) => {
     instance.collection('list').insertOne(urlObj, (err, result) => {
       if (err)
         reject(err);
-      console.log(result);
       resolve(result);
     });
   });

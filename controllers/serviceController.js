@@ -23,7 +23,6 @@ serviceController.startService = async (id) => {
         if (urlObj.responses.length == 100)
           urlObj.responses.shift();
         urlObj.responses.push(res.elapsedTime);
-        console.log(res.elapsedTime);
         Url.update(id, urlObj)
           .then(result => {
           })

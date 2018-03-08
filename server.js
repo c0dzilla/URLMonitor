@@ -16,7 +16,6 @@ app.use(bodyParser.json());
 app.listen(config.port || 3000);
 
 MongoClient.connect(config.mongo.url, (err, database) => {
-  console.log("connected to database");
   db.setInstance(database.db(config.mongo.db));
 
   app.get('/', (req, res) => {

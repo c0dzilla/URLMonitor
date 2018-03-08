@@ -17,7 +17,6 @@ homeController.listUrls = (req, res) => {
 }
 
 homeController.addUrl = (req, res) => {
-  console.log(req.body);
   const id = crypto.randomBytes(16).toString("hex");
   const urlObj = {
     _id: id,
@@ -30,7 +29,7 @@ homeController.addUrl = (req, res) => {
   .then(result => {
     ServiceController.startService(id);
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(result));
+    res.send(JSON.stringify(result.ops[0]));
   })
   .catch(err => {
     console.log(err);
