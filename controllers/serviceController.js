@@ -13,13 +13,15 @@ serviceController.startService = async (id) => {
     .then((urlObj) => {
       let reqObj = urlObj;
       reqObj.time = true;
-      services[id] = setInterval(function() {request(reqObj, (err, res, body) => {
+      services[id] = setInterval(() => {request(reqObj, (err, res, body) => {
         if (err) {
           console.log(err);
           return;
         }
         if (!urlObj.responses)
           urlObj.responses = [];
+        if (urlObj.responses.length == 100)
+          urlObj.responses.shift();
         urlObj.responses.push(res.elapsedTime);
         console.log(res.elapsedTime);
         Url.update(id, urlObj)
