@@ -1,10 +1,9 @@
-const instance = require('./instance.js')();
-
+var db = require('../utils/db.js');
 function List () {};
 
 List.getUrls = () => {
+  let instance = db.getInstance();
   return new Promise((resolve, reject) => {
-    console.log(instance);
     instance.collection('list').find({}).toArray((err, result) => {
       if (err)
         reject(err);
@@ -14,6 +13,7 @@ List.getUrls = () => {
 }
 
 List.getUrl = (id) => {
+  let instance = db.getInstance();
   const query = { _id : id };
   return new Promise((resolve, reject) => {
     instance.collection('list').findOne(query).toArray((err, result) => {
@@ -25,6 +25,7 @@ List.getUrl = (id) => {
 }
 
 List.addUrl = (urlObj) => {
+  let instance = db.getInstance();
   return new Promise((resolve, reject) => {
     instance.collection('list').insertOne((urlObj), () => {
       if (err)
@@ -35,6 +36,7 @@ List.addUrl = (urlObj) => {
 }
 
 List.deleteUrl = (id) => {
+  let instance = db.getInstance();
   const query = { _id : id };
   return new Promise((resolve, reject) => {
     instance.collection('list').deleteOne(query, (err, obj) => {

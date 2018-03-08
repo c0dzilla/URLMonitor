@@ -7,7 +7,8 @@ function homeController () {};
 homeController.listUrls = (req, res) => {
   List.getUrls()
     .then(result => {
-      res.render('home', result);
+      //res.render('home', result);
+      res.send('cool');
     })
     .catch(err => {
       console.log(err);
