@@ -5,7 +5,7 @@ Url.update = (id, urlObj) => {
   let instance = db.getInstance();
   const query = { _id : id };
   return new Promise((resolve, reject) => {
-    instance.collection('list').updateOne(query, myObj, (err, result) => {
+    instance.collection('list').replaceOne(query, urlObj, (err, result) => {
       if (err)
         reject(err);
       resolve(result);

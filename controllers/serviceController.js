@@ -11,19 +11,25 @@ serviceController.startService = async (id) => {
 
   List.getUrl(id)
     .then((urlObj) => {
-      services[id] = setInterval(request(urlObj, (err, res, body) => {
+      let reqObj = urlObj;
+      reqObj.time = true;
+      services[id] = setInterval(function() {request(reqObj, (err, res, body) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
         if (!urlObj.responses)
           urlObj.responses = [];
         urlObj.responses.push(res.elapsedTime);
-        Url.update(urlObj)
+        console.log(res.elapsedTime);
+        Url.update(id, urlObj)
           .then(result => {
-            console.log(result);
           })
           .catch(err => {
             console.log(err);
           })
       })
-      , 1000);
+      }, 1000);
     })
     .catch(err => {
       console.log(err);
@@ -36,11 +42,5 @@ serviceController.endService = (id) => {
     delete services[id];
   }
 }
-/*
-serviceController.restartService = (id) => {
-  if (services[id]) {
-    clearInterval(services[id]);
-  }
-}
-*/
+
 module.exports = serviceController;

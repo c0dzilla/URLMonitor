@@ -1,3 +1,6 @@
+/*
+* Purpose: Ensure already created db instance is used
+*/
 function db () {};
 
 var instance = null;

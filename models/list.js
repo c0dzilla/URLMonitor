@@ -16,7 +16,7 @@ List.getUrl = (id) => {
   let instance = db.getInstance();
   const query = { _id : id };
   return new Promise((resolve, reject) => {
-    instance.collection('list').findOne(query).toArray((err, result) => {
+    instance.collection('list').findOne(query, (err, result) => {
       if (err)
         reject(err);
       resolve(result);
@@ -27,7 +27,7 @@ List.getUrl = (id) => {
 List.addUrl = (urlObj) => {
   let instance = db.getInstance();
   return new Promise((resolve, reject) => {
-    instance.collection('list').insertOne((urlObj), () => {
+    instance.collection('list').insertOne(urlObj, (err, result) => {
       if (err)
         reject(err);
       resolve();

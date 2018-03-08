@@ -7,18 +7,17 @@ function homeController () {};
 homeController.listUrls = (req, res) => {
   List.getUrls()
     .then(result => {
-      //res.render('home', result);
-      res.send('cool');
+      res.send(result);
     })
     .catch(err => {
       console.log(err);
-      //res.redirect('/');
     })
 }
 
 homeController.addUrl = (req, res) => {
+  console.log(req.body);
   // TODO: Generate truly unique id
-  const id = Math.random()*100;
+  const id = parseInt(Math.random()*100);
   const urlObj = {
     _id: id,
     url: req.body.url,
@@ -29,6 +28,7 @@ homeController.addUrl = (req, res) => {
   List.addUrl(urlObj)
   .then(() => {
     ServiceController.startService(id);
+    res.send('added');
   })
   .catch(err => {
     res.redirect('/');
