@@ -4,6 +4,7 @@ var MongoClient = require('mongodb').MongoClient;
 var config = require('./config/config.json');
 var db = require('./utils/db.js');
 var router = require('./routes/routes.js');
+var HomeController = require('./controllers/homeController');
 var app = express();
 
 app.set('views', __dirname + '/views');
@@ -16,5 +17,6 @@ app.listen(config.port || 4321);
 
 MongoClient.connect(config.mongo.url, (err, database) => {
   db.setInstance(database.db(config.mongo.db));
+  HomeController.handleStartup();
   app.use('/', router);
 })

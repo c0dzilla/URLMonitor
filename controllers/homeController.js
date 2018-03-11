@@ -6,6 +6,18 @@ const crypto = require('crypto');
 
 function homeController () {};
 
+homeController.handleStartup = () => {
+  List.getUrls()
+    .then(urls => {
+      for (url of urls) {
+        ServiceController.startService(url._id);
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    })
+}
+
 homeController.listUrls = (req, res) => {
   List.getUrls()
     .then(urls => {
@@ -26,14 +38,14 @@ homeController.addUrl = (req, res) => {
     headers: req.body.headers
   }
   List.addUrl(urlObj)
-  .then(result => {
-    ServiceController.startService(id);
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(result.ops[0]));
-  })
-  .catch(err => {
-    console.log(err);
-  })
+    .then(result => {
+      ServiceController.startService(id);
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify(result.ops[0]));
+    })
+    .catch(err => {
+      console.log(err);
+    })
 }
 
 homeController.deleteUrl = (req, res) => {
